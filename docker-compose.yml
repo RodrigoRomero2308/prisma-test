@@ -1,0 +1,23 @@
+version: '2.4'
+
+services:
+  mysqldb:
+    image: mysql:8.0.23
+    command: --default-authentication-plugin=mysql_native_password
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: prismatest
+      MYSQL_USER: user
+      MYSQL_PASSWORD: userpass
+    ports:
+      - 3306:3306
+    volumes:
+      - ./dbdata:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin:5.1.0-apache
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    environment:
+      - PMA_ARBITRARY=1
